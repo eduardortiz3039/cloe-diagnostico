@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diagnóstico Cloe.com — Resumen Ejecutivo</title>
+  <meta name="description" content="Análisis completo del canal online de Cloe.com: abandono de carrito, NPS, estrategias de recuperación y fuentes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #181818;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #e8e4dc;
+      --muted: #6a6560;
+      --muted2: #9a9590;
+      --accent: #c8a882;
+      --accent2: #e8c49a;
+      --red: #c25a3a;
+      --red-light: rgba(194,90,58,0.12);
+      --green: #4a8a6a;
+      --green-light: rgba(74,138,106,0.1);
+      --yellow: #c8a020;
+      --yellow-light: rgba(200,160,32,0.1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      color: var(--muted2);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 120px 40px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 80px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 600;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--muted2);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .kpi {
+      background: var(--surface);
+      padding: 28px 20px;
+      text-align: center;
+    }
+
+    .kpi-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-val.red { color: var(--red); }
+    .kpi-val.yellow { color: var(--yellow); }
+    .kpi-val.accent { color: var(--accent); }
+    .kpi-val.green { color: var(--green); }
+
+    .kpi-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* ── SECTION ── */
+    .section { margin-bottom: 80px; }
+
+    .section-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-tag::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      color: var(--text);
+    }
+
+    h2 em { font-style: italic; color: var(--accent); }
+
+    p {
+      color: var(--muted2);
+      margin-bottom: 18px;
+      font-weight: 300;
+    }
+
+    p strong { color: var(--text); font-weight: 500; }
+
+    /* ── CAUSE CARDS ── */
+    .cause-list { display: grid; gap: 2px; }
+
+    .cause-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      align-items: start;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .cause-card:hover {
+      border-color: var(--border2);
+      background: var(--surface2);
+    }
+
+    .cause-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--border2);
+      line-height: 1;
+      padding-top: 4px;
+    }
+
+    .cause-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .cause-body {
+      font-size: 13.5px;
+      color: var(--muted2);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── DATA BARS ── */
+    .bars-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+
+    .bars-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 52px;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .bar-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted2);
+      text-align: right;
+    }
+
+    .bar-track {
+      background: rgba(255,255,255,0.05);
+      border-radius: 1px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 1px;
+    }
+
+    .bar-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── INCIDENT ── */
+    .incident-card {
+      background: rgba(194,90,58,0.05);
+      border: 1px solid rgba(194,90,58,0.2);
+      padding: 36px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .incident-card::after {
+      content: '!';
+      position: absolute;
+      right: -8px;
+      top: -24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 180px;
+      font-weight: 700;
+      color: rgba(194,90,58,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .incident-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .incident-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .incident-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: #d47060;
+      margin-bottom: 16px;
+    }
+
+    .incident-body {
+      font-size: 14px;
+      color: var(--muted2);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .incident-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .i-stat {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(194,90,58,0.15);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .i-stat-n {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+    }
+
+    .i-stat-l {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── OPPORTUNITY ── */
+    .opp-card {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    .opp-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .opp-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: var(--accent2);
+      line-height: 1;
+    }
+
+    .opp-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .opp-note {
+      font-size: 13px;
+      color: var(--muted);
+      text-align: right;
+      max-width: 220px;
+      line-height: 1.7;
+    }
+
+    /* ── STRATEGIES ── */
+    .strategy {
+      border: 1px solid var(--border);
+      margin-bottom: 2px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .strategy:hover { border-color: var(--border2); }
+
+    .strategy-header {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      align-items: center;
+      gap: 20px;
+      padding: 28px 32px;
+      cursor: pointer;
+      background: var(--surface);
+      transition: background 0.2s;
+    }
+
+    .strategy-header:hover { background: var(--surface2); }
+
+    .strategy-n {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .strategy-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .strategy-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .strategy-toggle {
+      font-size: 18px;
+      color: var(--muted);
+      transition: transform 0.3s;
+      user-select: none;
+    }
+
+    .strategy.open .strategy-toggle { transform: rotate(45deg); }
+
+    .strategy-body {
+      display: none;
+      padding: 0 32px 32px 116px;
+      background: var(--surface);
+    }
+
+    .strategy.open .strategy-body { display: block; }
+
+    .strategy-body p {
+      font-size: 14px;
+      color: var(--muted2);
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    .strategy-body p:last-child { margin-bottom: 0; }
+
+    .strategy-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    .tag-free { background: var(--green-light); color: #6ab88a; }
+    .tag-low { background: var(--yellow-light); color: #c8a838; }
+    .tag-urgent { background: var(--red-light); color: #d47060; }
+    .tag-structural { background: rgba(200,168,130,0.1); color: var(--accent); }
+
+    /* ── BRANDS ── */
+    .brand-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+      margin-bottom: 40px;
+    }
+
+    .brand-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+
+    .brand-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .brand-body {
+      font-size: 13px;
+      color: var(--muted2);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── SOURCES ── */
+    .sources-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .source-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .source-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .source-links a {
+      font-size: 12px;
+      color: var(--muted2);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      transition: all 0.2s;
+      word-break: break-all;
+    }
+
+    .source-links a:hover {
+      color: var(--accent);
+      border-color: var(--border2);
+      background: var(--surface2);
+    }
+
+    .internal-note {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--muted2);
+      margin-top: 24px;
+    }
+
+    /* ── CONCLUSION ── */
+    .conclusion {
+      border-top: 1px solid var(--border);
+      padding-top: 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+
+    .conclusion h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      margin-top: 80px;
+      padding: 32px 40px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .page { padding: 100px 20px 60px; }
+      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .cause-card { grid-template-columns: 1fr; }
+      .cause-num { display: none; }
+      .bar-row { grid-template-columns: 120px 1fr 44px; }
+      .incident-stats { grid-template-columns: 1fr; }
+      .opp-card { grid-template-columns: 1fr; }
+      .opp-note { text-align: left; max-width: 100%; }
+      .brand-grid { grid-template-columns: 1fr; }
+      .strategy-header { grid-template-columns: 1fr auto; }
+      .strategy-n { display: none; }
+      .strategy-body { padding-left: 32px; }
+      .conclusion { grid-template-columns: 1fr; gap: 32px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-brand">Cloe.com — Diagnóstico</span>
+    <ul class="nav-links">
+      <li><a href="#causas">Causas</a></li>
+      <li><a href="#estrategias">Estrategias</a></li>
+      <li><a href="#marcas">Referentes</a></li>
+      <li><a href="#fuentes">Fuentes</a></li>
+    </ul>
+  </nav>
+
+  <div class="page">
+
+    <!-- HERO -->
+    <section class="hero fade-in">
+      <div class="hero-eyebrow">Canal Online B2C · Noviembre 2025</div>
+      <h1>¿Qué está<br>pasando en<br><em>Cloe.com?</em></h1>
+      <p class="hero-desc">
+        Diagnóstico ejecutivo basado en datos de NPS, clasificación B2C de quejas
+        y análisis del comportamiento de carrito. Un canal con producto fuerte
+        y confianza debilitada.
+      </p>
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-val red">80</div>
+          <div class="kpi-label">NPS Online</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val yellow">64%</div>
+          <div class="kpi-label">Abandono carrito</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val accent">7%</div>
+          <div class="kpi-label">Tasa respuesta NPS</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-val green">50%</div>
+          <div class="kpi-label">Tráfico desde móvil</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUÉ PASA -->
+    <section class="section fade-in">
+      <div class="section-tag">Contexto</div>
+      <h2>¿Qué está <em>pasando?</em></h2>
+      <p>Cloe.com tiene el NPS más bajo de sus tres canales con un puntaje de 80, comparado con 92 de Boutique y 91 de Outlet. Al mismo tiempo tiene la tasa de respuesta más alta con un 7%, lo que significa que los clientes online están lo suficientemente inconformes como para tomarse el tiempo de quejarse. Eso no es casualidad — es una señal clara de que el canal digital tiene problemas acumulados que llevan tiempo sin resolverse.</p>
+      <p>El abandono de carrito está en <strong>64% sobre 120,000 usuarios</strong> que agregan productos. Eso representa aproximadamente <strong>76,800 personas</strong> que muestran intención de compra pero no llegan al checkout. Siendo conservadores, recuperar solo el 10% de esos abandonos con un ticket promedio de $500 MXN representa cerca de <strong>$3,840,000 MXN</strong> que hoy se están perdiendo.</p>
+    </section>
+
+    <!-- CAUSAS -->
+    <section class="section fade-in" id="causas">
+      <div class="section-tag">Diagnóstico</div>
+      <h2>Las <em>3 causas</em> reales</h2>
+
+      <div class="cause-list">
+        <div class="cause-card">
+          <div class="cause-num">01</div>
+          <div>
+            <div class="cause-title">Fricción técnica en móvil</div>
+            <p class="cause-body">El 50% del tráfico entra desde celular. La clasificación B2C confirma que Navegación representa el 44.8% de problemas en la categoría Página, y Mobile aparece como queja específica con 10.3%. Los benchmarks globales documentan que el abandono promedio en desktop es 68%, pero en móvil sube al 78%. Cloe está exactamente dentro de ese patrón.</p>
+          </div>
+        </div>
+        <div class="cause-card">
+          <div class="cause-num">02</div>
+          <div>
+            <div class="cause-title">Desconfianza acumulada en el canal online</div>
+            <p class="cause-body">Paquetería es la segunda categoría con más quejas, representando el 20.4% del total B2C. De esas quejas, el 56.8% es por tiempos de entrega y el 35.8% por falta de notificaciones. El cliente compra y queda en silencio total — no sabe dónde está su pedido ni cuándo llega. Un cliente que ya vivió esa experiencia agrega al carrito pero duda antes de volver a pagar.</p>
+          </div>
+        </div>
+        <div class="cause-card">
+          <div class="cause-num">03</div>
+          <div>
+            <div class="cause-title">Comportamiento especulativo instalado por el incidente del cupón</div>
+            <p class="cause-body">Un error de configuración puso productos a precio cero durante 10 a 20 minutos. Se generaron 50 pedidos. El área administrativa lo comunicó como "flash promo". Esa decisión instaló en una audiencia organizada la creencia de que si dejan el carrito de madrugada, pueden conseguir productos gratis. Hay además una queja activa ante PROFECO que requiere atención legal urgente.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA BARS -->
+    <section class="section fade-in">
+      <div class="section-tag">Datos B2C</div>
+      <h2>¿De qué se <em>quejan?</em></h2>
+
+      <div class="bars-card">
+        <div class="bars-title">Clasificación detallada de quejas B2C — Cloe.com</div>
+        <div class="bar-row">
+          <div class="bar-name">Variedad de productos</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:#c8a882;"></div></div>
+          <div class="bar-pct">23.6%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Paquetería</div>
+          <div class="bar-track"><div class="bar-fill" style="width:86%;background:#c25a3a;"></div></div>
+          <div class="bar-pct">20.4%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Promociones</div>
+          <div class="bar-track"><div class="bar-fill" style="width:60%;background:#c8a020;"></div></div>
+          <div class="bar-pct">14.1%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Página / UX</div>
+          <div class="bar-track"><div class="bar-fill" style="width:31%;background:#4a6a8a;"></div></div>
+          <div class="bar-pct">7.3%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Calidad producto</div>
+          <div class="bar-track"><div class="bar-fill" style="width:28%;background:#5a7a6a;"></div></div>
+          <div class="bar-pct">6.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Atención al cliente</div>
+          <div class="bar-track"><div class="bar-fill" style="width:17%;background:#6a8a7a;"></div></div>
+          <div class="bar-pct">4.0%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">Empaque</div>
+          <div class="bar-track"><div class="bar-fill" style="width:13%;background:#7a8a80;"></div></div>
+          <div class="bar-pct">3.0%</div>
+        </div>
+      </div>
+
+      <!-- INCIDENT -->
+      <div class="incident-card">
+        <div class="incident-tag"><span class="incident-dot"></span>Evento crítico — semana pasada</div>
+        <div class="incident-title">El incidente del cupón en $0</div>
+        <p class="incident-body">
+          Un error de configuración puso productos a precio cero un lunes por la noche. Duró entre 10 y 20 minutos.
+          El área administrativa lo comunicó como una <strong style="color:#d47060">"flash promo"</strong> — esa fue la decisión más costosa,
+          no el bug en sí. Ahora una audiencia organizada sabe que puede pasar y está esperando que vuelva a ocurrir.
+          Hay una queja ante PROFECO que necesita revisión legal urgente esta semana.
+        </p>
+        <div class="incident-stats">
+          <div class="i-stat">
+            <div class="i-stat-n">50</div>
+            <div class="i-stat-l">pedidos en 10 minutos</div>
+          </div>
+          <div class="i-stat">
+            <div class="i-stat-n">1</div>
+            <div class="i-stat-l">queja PROFECO activa</div>
+          </div>
+          <div class="i-stat">
+            <div class="i-stat-n">$0</div>
+            <div class="i-stat-l">precio mostrado</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPPORTUNITY -->
+      <div class="opp-card">
+        <div>
+          <div class="opp-label">Oportunidad de recuperación — estimado conservador</div>
+          <div class="opp-num">$3,840,000</div>
+          <div class="opp-sub">MXN · recuperando 10% de 76,800 abandonos a ticket promedio de $500</div>
+        </div>
+        <div class="opp-note">Incluso con el 5%, el impacto supera $1.9M MXN sin cambiar precios ni producto.</div>
+      </div>
+    </section>
+
+    <!-- ESTRATEGIAS -->
+    <section class="section fade-in" id="estrategias">
+      <div class="section-tag">Plan de acción</div>
+      <h2>Las 6 <em>estrategias</em></h2>
+
+      <!-- 1 -->
+      <div class="strategy open">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">01 / 06</div>
+          <div>
+            <div class="strategy-name">GHOST BUYER DETECTION</div>
+            <div class="strategy-sub">Separar compradores reales de especuladores</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-free">Costo: cero</span>
+          <p>Después del incidente del cupón, un porcentaje de los 76,800 carritos abandonados no corresponde a compradores frustrados sino a usuarios esperando activamente otro error de precio. Mezclar ambos segmentos en el mismo análisis genera decisiones equivocadas — si intentas recuperarlos con descuentos, solo refuerzas el comportamiento especulativo.</p>
+          <p>Ghost Buyer Detection consiste en segmentar los carritos por antigüedad y patrón de comportamiento. Los carritos con más de 72 horas sin actividad, combinados con usuarios que tienen historial de múltiples abandonos sin compra, son el perfil especulador. Los carritos recientes de usuarios nuevos o con historial de compra son el perfil comprador real.</p>
+          <p>A cada segmento se le aplica una estrategia diferente: al comprador real se le manda un recordatorio con urgencia genuina, al especulador simplemente no se le alimenta con descuentos. El costo es cero — solo requiere filtros en la herramienta de analítica existente.</p>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="strategy">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">02 / 06</div>
+          <div>
+            <div class="strategy-name">SILENT JOURNEY MAPPING</div>
+            <div class="strategy-sub">Encontrar el punto exacto donde el usuario abandona en móvil</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-free">Costo: cero — Microsoft Clarity es gratis</span>
+          <p>Los datos confirman problemas de navegación y mobile en el checkout, pero ningún número interno dice exactamente en qué paso específico se va el usuario — si es al ver el costo de envío, al intentar llenar el formulario, al no encontrar su método de pago, o simplemente porque el botón de pagar es difícil de presionar desde móvil.</p>
+          <p>Silent Journey Mapping es la instalación de Microsoft Clarity, herramienta completamente gratuita, que graba sesiones reales de usuarios navegando el sitio. En menos de dos semanas se tienen grabaciones reales de personas en celular intentando hacer checkout — se ve exactamente dónde se detienen, dónde hacen zoom, dónde presionan algo que no funciona y dónde simplemente cierran.</p>
+          <p>Esta estrategia debe ejecutarse antes de cualquier inversión en rediseño. No tiene sentido gastar en arreglar el checkout sin saber primero qué parte está rota.</p>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="strategy">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">03 / 06</div>
+          <div>
+            <div class="strategy-name">HEARTBEAT LOGISTICS</div>
+            <div class="strategy-sub">Eliminar el silencio post-compra que destruye la recompra</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-low">Costo bajo — plataforma básica de mensajería</span>
+          <p>El 35.8% de las quejas de paquetería son por falta de notificaciones. El cliente no odia que el pedido tarde — odia no saber nada. La ansiedad post-compra es uno de los factores más documentados de pérdida de clientes recurrentes en ecommerce de moda.</p>
+          <p>Heartbeat Logistics es la implementación de tres mensajes automáticos vía WhatsApp que funcionan como el latido constante de la orden: el primero al confirmar el pedido con número de seguimiento, el segundo cuando el paquete sale del almacén, y el tercero cuando está en camino con estimado de entrega. Tres mensajes. Sin intervención humana.</p>
+          <p>Lojas Renner, retailer de moda en Brasil, implementó una estrategia equivalente y obtuvo tasas de lectura 70% más altas que otros canales, con un aumento medible en clientes que regresaron a finalizar compras futuras.</p>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="strategy">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">04 / 06</div>
+          <div>
+            <div class="strategy-name">SECOND CHANCE FLOW</div>
+            <div class="strategy-sub">Recuperar ventas perdidas en la primera hora del abandono</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-low">Costo bajo — automatización de mensajería</span>
+          <p>La ventana de mayor intención de compra después de un abandono de carrito es la primera hora. Pasada esa hora, la probabilidad de recuperación cae de forma significativa. Hoy Cloe.com no tiene ningún flujo automatizado que actúe en esa ventana — 76,800 usuarios se van y nadie los contacta.</p>
+          <p>Second Chance Flow es una secuencia de máximo tres mensajes: el primero a los 45 minutos del abandono recordando los productos sin descuento, el segundo a las 24 horas con un beneficio concreto como envío gratis si el margen lo permite, y el tercero a las 72 horas como último aviso con sentido de urgencia genuino.</p>
+          <p>Las marcas de moda que implementan esta estrategia reportan recuperar entre 20 y 30% de carritos abandonados, con los mejores casos llegando al 40%. Skullcandy recuperó entre 25 y 40% de ventas perdidas con exactamente este esquema. Aplicado al volumen de Cloe, el escenario conservador del 20% representa más de 15,000 ventas adicionales.</p>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="strategy">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">05 / 06</div>
+          <div>
+            <div class="strategy-name">TRUST RESET</div>
+            <div class="strategy-sub">Reconstruir la confianza dañada por el incidente del cupón</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-urgent">Urgente — el comportamiento especulativo crece con el tiempo</span>
+          <p>El error de precio no fue el problema — la decisión de comunicarlo como "flash promo" creó en parte de la audiencia la creencia de que Cloe hace promociones sorpresa de madrugada y que vale la pena estar pendiente. Esa creencia no desaparece sola.</p>
+          <p>Trust Reset es una comunicación proactiva y directa a la base de usuarios, especialmente a aquellos con carritos activos de más de 48 horas, que establezca con claridad cómo funciona realmente la política de precios y promociones de Cloe.com. No se trata de señalar el incidente — se trata de comunicar con confianza cómo sí funcionan las promos, cuándo se anuncian, por qué canal y con cuánta anticipación.</p>
+          <p>El estándar internacional documentado en el manejo de Amazon ante errores similares es siempre la transparencia directa: comunicar el error como error, cancelar los pedidos afectados y no cobrar nada. Nunca llamarlo promo. Eso es exactamente lo que debe guiar la comunicación correctiva ahora.</p>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="strategy">
+        <div class="strategy-header" onclick="toggleStrategy(this)">
+          <div class="strategy-n">06 / 06</div>
+          <div>
+            <div class="strategy-name">BRIDGE PROTOCOL</div>
+            <div class="strategy-sub">Conectar Customer Experience con Ecommerce de forma permanente</div>
+          </div>
+          <div class="strategy-toggle">+</div>
+        </div>
+        <div class="strategy-body">
+          <span class="strategy-tag tag-structural">Cambio estructural — sin costo adicional</span>
+          <p>El NPS de noviembre 2025 ya tenía el diagnóstico completo: quejas de paquetería, confusión en promociones, experiencia online deficiente. Esa información nunca llegó al equipo de ecommerce de forma estructurada, y los problemas que el NPS describía en noviembre se convirtieron en los mismos que hoy explican el 64% de abandono. Los datos existían — simplemente no se estaban usando juntos.</p>
+          <p>Bridge Protocol es la creación de un ritual mínimo de alineación entre ambos equipos: una reunión quincenal donde se cruzan tres métricas en conjunto — NPS online, tasa de abandono de carrito y top 3 de quejas de paquetería. No requiere nueva tecnología ni presupuesto.</p>
+          <p>Solo requiere que dos equipos que hoy trabajan en silos compartan los mismos números al mismo tiempo. Eso solo ya hubiera permitido detectar el problema del cupón mucho antes de que escalara.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARCAS REFERENTES -->
+    <section class="section fade-in" id="marcas">
+      <div class="section-tag">Referentes internacionales</div>
+      <h2>Lo que han hecho <em>otras marcas</em></h2>
+
+      <div class="brand-grid">
+        <div class="brand-card">
+          <div class="brand-name">Amazon</div>
+          <p class="brand-body">Ante errores de precio, su comunicación estándar cancela el pedido, notifica al cliente y aclara que no se hizo ningún cargo — nunca lo llaman promo. Eso evita que los usuarios aprendan a esperar errores de precio como estrategia comercial.</p>
+        </div>
+        <div class="brand-card">
+          <div class="brand-name">Lojas Renner</div>
+          <p class="brand-body">Retailer de moda en Brasil. Implementó recuperación de carritos vía WhatsApp y obtuvo tasas de lectura 70% más altas que otros canales, con aumento significativo en clientes que regresaron a finalizar su compra.</p>
+        </div>
+        <div class="brand-card">
+          <div class="brand-name">Walmart Canadá</div>
+          <p class="brand-body">Invirtió en hacer su experiencia móvil más rápida y responsiva. Resultado: incremento del 20% en conversiones generales y un aumento del 98% en órdenes completadas desde móvil.</p>
+        </div>
+      </div>
+
+      <p>El patrón que repiten todas estas marcas es el mismo: el problema nunca es uno solo, siempre es una combinación de confianza, fricción técnica y comunicación — y la solución requiere atacar los tres al mismo tiempo.</p>
+    </section>
+
+    <!-- FUENTES -->
+    <section class="section fade-in" id="fuentes">
+      <div class="section-tag">Bibliografía</div>
+      <h2>Fuentes <em>consultadas</em></h2>
+
+      <div class="sources-grid">
+
+        <div>
+          <div class="source-group-title">Error de precios — Amazon</div>
+          <div class="source-links">
+            <a href="https://sellercentral.amazon.com/forums/t/when-you-make-a-pricing-error/388763" target="_blank" rel="noopener">sellercentral.amazon.com — When You Make A Pricing Error</a>
+            <a href="https://www.sellerlogic.com/en/blog/amazon-price-glitch/" target="_blank" rel="noopener">sellerlogic.com — Amazon Price Glitch & Seller Safeguards</a>
+            <a href="https://www.sellerapp.com/blog/amazon-price-glitch/" target="_blank" rel="noopener">sellerapp.com — Amazon Price Glitch Guide</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="source-group-title">Abandono de carrito en móvil y benchmarks</div>
+          <div class="source-links">
+            <a href="https://www.growcode.com/blog/mobile-checkout-improvement/" target="_blank" rel="noopener">growcode.com — 10 Elements of Mobile Checkout That Need Improvement</a>
+            <a href="https://getshogun.com/guides/ecommerce-conversion-rate-optimization" target="_blank" rel="noopener">getshogun.com — Ecommerce Conversion Rate Optimization</a>
+            <a href="https://mailmend.io/blogs/cart-abandonment-recovery-statistics" target="_blank" rel="noopener">mailmend.io — 44 Cart Abandonment Recovery Statistics 2026</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="source-group-title">Recuperación de carrito por WhatsApp</div>
+          <div class="source-links">
+            <a href="https://www.wapikit.com/blog/whatsapp-cart-recovery-fashion-templates" target="_blank" rel="noopener">wapikit.com — WhatsApp Cart Abandonment Fashion Templates</a>
+            <a href="https://business.whatsapp.com/blog/shopping-cart-recovery-seasonal-sales" target="_blank" rel="noopener">business.whatsapp.com — Cart Recovery (caso Lojas Renner)</a>
+            <a href="https://www.omnichat.ai/cart-abandonment-recovery/" target="_blank" rel="noopener">omnichat.ai — Cart Abandonment Recovery (caso FILA)</a>
+            <a href="https://m.aisensy.com/blog/recover-abandoned-carts-with-whatsapp/" target="_blank" rel="noopener">aisensy.com — Recover Abandoned Carts with WhatsApp</a>
+            <a href="https://www.infobip.com/blog/cart-abandonment-guide" target="_blank" rel="noopener">infobip.com — Cart Abandonment: 11 Proven Strategies</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="source-group-title">Casos de conversión y optimización</div>
+          <div class="source-links">
+            <a href="https://noahdigital.ca/blog/conversion-rate-optimization-case-studies-ecommerce/" target="_blank" rel="noopener">noahdigital.ca — CRO Case Studies (caso Walmart Canadá)</a>
+            <a href="https://vwo.com/conversion-rate-optimization/conversion-rate-optimization-case-studies/" target="_blank" rel="noopener">vwo.com — Top 10 Conversion Rate Optimization Case Studies</a>
+            <a href="https://www.unific.com/blog/a-case-study-on-abandoned-carts-recovering-lost-profits-and-engaging-customers-segment-by-segment" target="_blank" rel="noopener">unific.com — Abandoned Carts: Recovering Lost Profits</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="source-group-title">Zara — UX y experiencia online</div>
+          <div class="source-links">
+            <a href="https://www.renascence.io/journal/how-zara-enhances-customer-experience-cx-through-the-customer-journey" target="_blank" rel="noopener">renascence.io — How Zara Enhances Customer Experience</a>
+            <a href="https://medium.com/@nassaakshit/zara-lets-challenge-their-online-presence-b42330a93bce" target="_blank" rel="noopener">medium.com — Zara: A Story About Their Online Presence</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="internal-note">
+        <strong style="color:var(--accent);">Nota sobre fuentes internas:</strong> Los datos de NPS (noviembre 2025), clasificación B2C de quejas, volumen de carritos (120,000 usuarios, 64% de abandono), el incidente del cupón y la queja ante PROFECO son datos internos de Cloe proporcionados directamente en el análisis. No tienen fuente externa publicada.
+      </div>
+    </section>
+
+    <!-- CONCLUSIÓN -->
+    <div class="conclusion fade-in">
+      <div>
+        <h3>El problema de fondo</h3>
+        <p>Cloe.com tiene un <strong>problema de confianza acumulada</strong> en el canal online, no un problema de producto. El NPS de 80 ya lo decía en noviembre. El cliente online ha tenido malas experiencias con entregas, empaques y promociones confusas — y el incidente del cupón llegó a una audiencia que ya estaba en guardia.</p>
+      </div>
+      <div>
+        <h3>La buena noticia</h3>
+        <p>La marca <strong>es altamente valorada</strong>. El problema no es el producto, es el canal online y la experiencia post-compra. Eso es perfectamente solucionable. El dinero no está en conseguir nuevos clientes — está en no perder a los <strong>76,800 que ya llegaron hasta el carrito.</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>Cloe.com — Diagnóstico Ejecutivo</span>
+    <span>Basado en NPS Nov 2025 · Clasificación B2C · Análisis de carrito</span>
+  </footer>
+
+  <script>
+    // Toggle strategy accordion
+    function toggleStrategy(header) {
+      const strategy = header.parentElement;
+      strategy.classList.toggle('open');
+    }
+
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
